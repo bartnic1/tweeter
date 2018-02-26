@@ -15,12 +15,23 @@ html {
  */
 
 body {
-  margin: 0;
+  position: relative;
   color: #244751;
   background-color: #eee;
   font-family: 'Roboto Condensed', sans-serif;
+  background-color: #e0e0e0;
 }
 
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
+
+.container {
+  position: absolute;
+  background-color: white;
+  width: 450px;
+  height: 800px;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+}
