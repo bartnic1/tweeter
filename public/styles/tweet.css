@@ -55,8 +55,9 @@
   position: relative;
   float: left;
   font-size: 1.3em;
+  font-weight: bold;
   left: 6%;
-  top: -30%;
+  top: -22%;
   color: #000000;
 }
 

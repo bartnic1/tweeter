@@ -21,3 +21,22 @@
   font-size: 32px;
   line-height: 80px;
 }
+
+.compose {
+  position: relative;
+  float: right;
+  height: 60px;
+  top: 10px;
+  right: 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 15px 10px 15px 10px;
+  background-color: #e7fdff;
+  color: #00a087;
+  font-size: 1.2em;
+}
+
+.compose:hover {
+  color: #000000;
+  background-color: #FFFFFF;
+}

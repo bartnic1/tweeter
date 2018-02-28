@@ -64,7 +64,7 @@ function createTweetElement(tweetData){
   // Header elements
   let $header = $("<header>");
   $("<img>").addClass("avatar").attr("src", tweetData.user.avatars.small).appendTo($header);
-  $(`<p><strong></strong></p>`).text(tweetData.user.name).addClass("name").appendTo($header);
+  $(`<p>`).text(tweetData.user.name).addClass("name").appendTo($header);
   $(`<p>`).text(tweetData.user.handle).addClass("handle").appendTo($header);
   // Article elements
   let $article = $("<article>");
@@ -116,6 +116,12 @@ $(document).ready(function(){
     $.post("/tweets/", formData).done(function(){
       loadTweets();
     });
+  });
+
+  $(".compose").on('click', function(event){
+    $(".new-tweet").slideToggle("fast");
+    //Could possibly only enable focus if opening the dialog box, but not sure its necessary
+    $(".new-tweet").find("textarea").focus();
   });
 
 });
