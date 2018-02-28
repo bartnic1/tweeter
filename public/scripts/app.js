@@ -64,11 +64,11 @@ function createTweetElement(tweetData){
   // Header elements
   let $header = $("<header>");
   $("<img>").addClass("avatar").attr("src", tweetData.user.avatars.small).appendTo($header);
-  $(`<p><strong>${tweetData.user.name}</strong></p>`).addClass("name").appendTo($header);
-  $(`<p>${tweetData.user.handle}</p>`).addClass("handle").appendTo($header);
+  $(`<p><strong></strong></p>`).text(tweetData.user.name).addClass("name").appendTo($header);
+  $(`<p>`).text(tweetData.user.handle).addClass("handle").appendTo($header);
   // Article elements
   let $article = $("<article>");
-  $(`<p>${tweetData.content.text}</p>`).addClass("content").appendTo($article);
+  $(`<p>`).text(tweetData.content.text).addClass("content").appendTo($article);
   // Footer elements
   let $footer = $("<footer>")
   $(`<span>${timeDifference} days ago</span>`).addClass("created-at").appendTo($footer);
@@ -83,7 +83,7 @@ function createTweetElement(tweetData){
 
 function renderTweets(data){
   if($('#tweets-container').children().length !== 0){
-    $('#tweets-container').append(createTweetElement(data[data.length - 1]));
+    $('#tweets-container').prepend(createTweetElement(data[data.length - 1]));
   }
   else{
     for(var tweetData of data){
