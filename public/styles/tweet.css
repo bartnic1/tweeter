@@ -1,0 +1,93 @@
+#tweet:hover {
+  opacity: 1.0;
+}
+
+#tweet {
+  position: relative;
+  height: 20%;
+  /*You can either do the following, but the right-hand border is strangely greyed out*/
+  /*margin: 2em 2em 0 2em;*/
+  /*Or you can do the following, and set the widht manually*/
+  width: 86%;
+  margin: 2em auto 0 auto;
+  /*The rest is the same*/
+  border-radius: 5px;
+  border: 1px solid #000000;
+  opacity: 0.5;
+}
+
+#tweet article {
+  position: relative;
+  height: 45%;
+  padding: 2%;
+  top: -10%;
+}
+
+#tweet header {
+  position: relative;
+  height: 35%;
+  background-color: #efefef;
+  border-radius: 5px 5px 0 0;
+}
+
+#tweet header .avatar {
+  position: relative;
+  float: left;
+  height: 80%;
+  width: 14%;
+  left: 3%;
+  top: 10%;
+  border-radius: 5px;
+}
+
+#tweet header .name {
+  position: relative;
+  float: left;
+  font-size: 1.3em;
+  left: 6%;
+  top: -30%;
+  color: #000000;
+}
+
+#tweet header .at {
+  position: relative;
+  float: right;
+  left: -2%;
+  top: -5%;
+}
+
+#tweet footer {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  border-top: 1px solid #dbd9d9;
+}
+
+#tweet footer .post-date {
+  position: relative;
+  font-size: 0.9em;
+  left: 2%;
+  bottom: -30%;
+}
+
+#tweet footer .flag {
+  position: relative;
+  float: right;
+  height: 200%;
+  width: 10%;
+}
+
+#tweet footer .retweet {
+  position: relative;
+  float: right;
+  height: 200%;
+  width: 10%;
+}
+
+#tweet footer .like {
+  position: relative;
+  float: right;
+  margin-right: 1%;
+  height: 200%;
+  width: 10%;
+}

@@ -1,6 +1,7 @@
 .new-tweet {
   position: relative;
   /*If you don't specify a width, it automatically fills it up*/
+  /*Works regardless of whether position is relative!*/
   margin: 2em 2em 0 2em;
   padding: 5px 10px 10px 10px;
   background-color: #e0e0e0;
@@ -24,6 +25,6 @@
 
 .new-tweet .counter {
   position: absolute;
-  right: 5px;
-  bottom: 10px;
+  right: 10px;
+  bottom: 13px;
 }
