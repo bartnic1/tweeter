@@ -2,6 +2,13 @@
   opacity: 1.0;
 }
 
+#tweets-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 #tweet {
   position: relative;
   height: 20%;
@@ -49,7 +56,7 @@
   color: #000000;
 }
 
-#tweet header .at {
+#tweet header .handle {
   position: relative;
   float: right;
   left: -2%;
@@ -63,7 +70,7 @@
   border-top: 1px solid #dbd9d9;
 }
 
-#tweet footer .post-date {
+#tweet footer .created-at {
   position: relative;
   font-size: 0.9em;
   left: 2%;
