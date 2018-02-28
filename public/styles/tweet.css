@@ -15,7 +15,7 @@
 
 .tweet {
   position: relative;
-  height: 20%;
+  height: 200px;
   /*You can either do the following, but the right-hand border is strangely greyed out*/
   /*margin: 2em 2em 0 2em;*/
   /*Or you can do the following, and set the widht manually*/
