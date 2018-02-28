@@ -28,3 +28,9 @@
   right: 10px;
   bottom: 13px;
 }
+
+.new-tweet .error-message {
+  position: absolute;
+  right: 45px;
+  bottom: 13px;
+}

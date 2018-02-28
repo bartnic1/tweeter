@@ -82,12 +82,40 @@ function createTweetElement(tweetData){
 }
 
 function renderTweets(data){
-  for(var tweetData of data){
-    $('#tweets-container').append(createTweetElement(tweetData));
+  if($('#tweets-container').children().length !== 0){
+    $('#tweets-container').append(createTweetElement(data[data.length - 1]));
+  }
+  else{
+    for(var tweetData of data){
+      $('#tweets-container').append(createTweetElement(tweetData));
+    }
   }
 }
 
-$(document).ready(function(){
-  renderTweets(data.slice(0,3));
-});
+function loadTweets(){
+  $.get("/tweets/", function(tweetJSONdata){
+    renderTweets(tweetJSONdata);
+  });
+}
 
+$(document).ready(function(){
+  renderTweets(data);
+
+  $("#tweetForm").on('submit', function(event){
+    event.preventDefault();
+    let errorMessage = $(".new-tweet").find(".error-message")
+    let tweetTextLength = $(".new-tweet").find("textarea").val().length;
+    if(tweetTextLength === 0){
+      return errorMessage.text("Error: No tweet present");
+    }
+    else if(tweetTextLength > 140){
+      return errorMessage.text("Error: Message too long");
+    }
+    errorMessage.text('');
+    let formData = $(this).serialize();
+    $.post("/tweets/", formData).done(function(){
+      loadTweets();
+    });
+  });
+
+});
