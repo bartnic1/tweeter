@@ -1,4 +1,8 @@
-#tweet:hover {
+.tweet:hover {
+  opacity: 1.0;
+}
+
+.tweet:hover .icons {
   opacity: 1.0;
 }
 
@@ -9,7 +13,7 @@
   height: 100%;
 }
 
-#tweet {
+.tweet {
   position: relative;
   height: 20%;
   /*You can either do the following, but the right-hand border is strangely greyed out*/
@@ -23,21 +27,21 @@
   opacity: 0.5;
 }
 
-#tweet article {
+.tweet article {
   position: relative;
   height: 45%;
   padding: 2%;
   top: -10%;
 }
 
-#tweet header {
+.tweet header {
   position: relative;
   height: 35%;
   background-color: #efefef;
   border-radius: 5px 5px 0 0;
 }
 
-#tweet header .avatar {
+.tweet header .avatar {
   position: relative;
   float: left;
   height: 80%;
@@ -47,7 +51,7 @@
   border-radius: 5px;
 }
 
-#tweet header .name {
+.tweet header .name {
   position: relative;
   float: left;
   font-size: 1.3em;
@@ -56,45 +60,48 @@
   color: #000000;
 }
 
-#tweet header .handle {
+.tweet header .handle {
   position: relative;
   float: right;
   left: -2%;
   top: -5%;
 }
 
-#tweet footer {
+.tweet footer {
   position: relative;
   width: 100%;
   height: 10%;
   border-top: 1px solid #dbd9d9;
 }
 
-#tweet footer .created-at {
+.tweet footer .created-at {
   position: relative;
   font-size: 0.9em;
   left: 2%;
   bottom: -30%;
 }
 
-#tweet footer .flag {
+.tweet footer .flag {
   position: relative;
   float: right;
   height: 200%;
   width: 10%;
+  opacity: 0;
 }
 
-#tweet footer .retweet {
+.tweet footer .retweet {
   position: relative;
   float: right;
   height: 200%;
   width: 10%;
+  opacity: 0;
 }
 
-#tweet footer .like {
+.tweet footer .like {
   position: relative;
   float: right;
   margin-right: 1%;
   height: 200%;
   width: 10%;
+  opacity: 0;
 }
