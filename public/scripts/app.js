@@ -120,7 +120,7 @@ $(document).ready(function(){
 
   $(".compose").on('click', function(event){
     $(".new-tweet").slideToggle("fast");
-    //Could possibly only enable focus if opening the dialog box, but not sure its necessary
+    //Could possibly only enable focus if opening the dialog box, but not sure if necessary
     $(".new-tweet").find("textarea").focus();
   });
 
