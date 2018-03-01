@@ -4,63 +4,76 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-// Test / driver code (temporary). Eventually will get this from the server.
-// Fake data taken from tweets.json
+//Created this function to find time difference between now and previous tweets
+//Only goes down to the hour, but can be easily modified to go to minutes and seconds.
+function findTimeDifference(today, tweet){
+  let diffSeconds = Math.floor(today/1000) - Math.floor(tweet/1000);
+  let returnString = '';
+  //Function converts epoch seconds to years, months, days, hours, minutes, seconds.
+  function getTimeElapsed(epochSeconds){
+    // time = [[years,yearSeconds], [months,monthSeconds], [days, daySeconds], [hours, hourSeconds]]
+    let time = [[0,31556926], [0,2629743], [0,86400], [0,3600]];
+    for(let timeIndex in time){
+      time[timeIndex][0] = Math.floor(epochSeconds/time[timeIndex][1]);
+      epochSeconds -= time[timeIndex][0]*time[timeIndex][1];
+    }
+    return timeArray = [time[0][0], time[1][0], time[2][0], time[3][0]];
+  }
+  let diffConverted = getTimeElapsed(diffSeconds);
+  for (let timeIndex in diffConverted){
+    switch(timeIndex){
+      case '0':
+        if (diffConverted[timeIndex] === 0){
+          break;
+        }else if(diffConverted[timeIndex] === 1){
+          returnString += `${diffConverted[timeIndex]} year, `;
+        }else{
+          returnString += `${diffConverted[timeIndex]} years, `;
+        }
+        break;
+      case '1':
+        if (diffConverted[timeIndex] === 0){
+          break;
+        }else if(diffConverted[timeIndex] === 1){
+          returnString += `${diffConverted[timeIndex]} month, `;
+        }else{
+          returnString += `${diffConverted[timeIndex]} months, `;
+        }
+        break;
+      case '2':
+        if (diffConverted[timeIndex] === 0){
+          break;
+        }else if(diffConverted[timeIndex] === 1){
+          returnString += `${diffConverted[timeIndex]} day, `;
+        }else{
+          returnString += `${diffConverted[timeIndex]} days, `;
+        }
+        break;
+      case '3':
+        if (diffConverted[timeIndex] === 0){
+          break;
+        }else if(diffConverted[timeIndex] === 1){
+          returnString += `${diffConverted[timeIndex]} hour ago`;
+        }else{
+          returnString += `${diffConverted[timeIndex]} hours ago`;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+  if(returnString === ''){
+    returnString = `Under an hour ago`;
+  }
+  return returnString;
+}
 
-// const data = [
-//   {
-//     "user": {
-//       "name": "Newton",
-//       "avatars": {
-//         "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-//         "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-//         "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-//       },
-//       "handle": "@SirIsaac"
-//     },
-//     "content": {
-//       "text": "If I have seen further it is by standing on the shoulders of giants"
-//     },
-//     "created_at": 1461116232227
-//   },
-//   {
-//     "user": {
-//       "name": "Descartes",
-//       "avatars": {
-//         "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-//         "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-//         "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-//       },
-//       "handle": "@rd" },
-//     "content": {
-//       "text": "Je pense , donc je suis"
-//     },
-//     "created_at": 1461113959088
-//   },
-//   {
-//     "user": {
-//       "name": "Johann von Goethe",
-//       "avatars": {
-//         "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-//         "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-//         "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-//       },
-//       "handle": "@johann49"
-//     },
-//     "content": {
-//       "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-//     },
-//     "created_at": 1461113796368
-//   }
-// ];
-
+//This generates the html for a new tweet
 function createTweetElement(tweetData){
   $( "#greatphoto" ).attr( "alt", "Beijing Brush Seller" );
   let $tweet = $("<div>").addClass("tweet");
-  //Translate into a full date, for now (will change later)
   let today = new Date().getTime();
-  let timeDifference = Math.floor((today - tweetData.created_at)/(1000*3600*24));
-
+  let timeDifference = findTimeDifference(today, tweetData.created_at);
   // Header elements
   let $header = $("<header>");
   $("<img>").addClass("avatar").attr("src", tweetData.user.avatars.small).appendTo($header);
@@ -71,7 +84,7 @@ function createTweetElement(tweetData){
   $(`<p>`).text(tweetData.content.text).addClass("content").appendTo($article);
   // Footer elements
   let $footer = $("<footer>")
-  $(`<span>${timeDifference} days ago</span>`).addClass("created-at").appendTo($footer);
+  $(`<span>${timeDifference}</span>`).addClass("created-at").appendTo($footer);
   $("<img>").addClass("icons like").attr("src", "/images/tweetLike.png").appendTo($footer);
   $("<img>").addClass("icons retweet").attr("src", "/images/tweetRetweet.png").appendTo($footer);
   $("<img>").addClass("icons flag").attr("src", "/images/tweetFlag.png").appendTo($footer);
@@ -80,7 +93,9 @@ function createTweetElement(tweetData){
   $tweet.append($footer);
   return $tweet;
 }
-//data.length - 1
+
+//This renders a new tweet onto the page. If the tweet-container is empty, load all tweets first.
+//Otherwise, only load the latest tweet that has been posted by the user.
 function renderTweets(data){
   if($('#tweets-container').children().length !== 0){
     $('#tweets-container').prepend(createTweetElement(data[0]));
@@ -92,12 +107,17 @@ function renderTweets(data){
   }
 }
 
+//This function loads the tweet data from the database and passes it into the render tweets function.
 function loadTweets(){
   $.get("/tweets/", function(tweetJSONdata){
     renderTweets(tweetJSONdata);
   });
 }
 
+
+//When the document loads, it first loads all the tweets in hte database.
+//When the a new tweet is created, assuming it passes relevant conditions, the serialized data
+//is sent to a server, after which it is immediately loaded on the screen using loadTweets().
 $(document).ready(function(){
   loadTweets();
   $("#tweetForm").on('submit', function(event){
@@ -117,10 +137,10 @@ $(document).ready(function(){
     });
   });
 
+
+//This jQuery script allows the new tweet form to slide up and down upon clicking the compose button.
   $(".compose").on('click', function(event){
     $(".new-tweet").slideToggle("fast");
-    //Could possibly only enable focus if opening the dialog box, but not sure if necessary
     $(".new-tweet").find("textarea").focus();
   });
-
 });

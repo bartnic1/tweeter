@@ -1,14 +1,12 @@
 .new-tweet {
   position: relative;
-  /*If you don't specify a width, it automatically fills it up*/
-  /*Works regardless of whether position is relative!*/
   margin: 2em 2em 0 2em;
   padding: 5px 10px 10px 10px;
   background-color: #e0e0e0;
   border-radius: 5px;
 }
 
-.new-tweet h2 {
+.new-tweet .title {
   border-bottom: 1px solid black;
   margin: 0;
 }
