@@ -123,15 +123,19 @@ $(document).ready(function(){
   $("#tweetForm").on('submit', function(event){
     event.preventDefault();
     let errorMessage = $(".new-tweet").find(".error-message")
-    let tweetTextLength = $(".new-tweet").find("textarea").val().length;
-    if(tweetTextLength === 0){
+    let tweetTextArea = $(".new-tweet").find("textarea");
+    if(tweetTextArea.val().length === 0){
       return errorMessage.text("Error: No tweet present");
     }
-    else if(tweetTextLength > 140){
+    else if(tweetTextArea.val().length > 140){
       return errorMessage.text("Error: Message too long");
     }
-    errorMessage.text('');
     let formData = $(this).serialize();
+    //Reset form upon submission
+    errorMessage.text('');
+    tweetTextArea.val('');
+    $(this).find(".counter").text(140);
+    //Send data to server
     $.post("/tweets/", formData).done(function(){
       loadTweets();
     });
