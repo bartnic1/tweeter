@@ -23,6 +23,7 @@
 }
 
 .compose {
+  visibility: hidden;
   position: relative;
   float: right;
   height: 3em;
@@ -41,9 +42,20 @@
   background-color: #FFFFFF;
 }
 
+.logout-span {
+  visibility: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 1em 5em 1em 5em;
+}
+
 .logout-button {
-  position: relative;
-  float: right;
-  top: 1.5em;
-  right: 2em;
+  width: 60px;
+  margin: 0 1em;
+}
+
+.welcome {
+  font-size: 1.2em;
 }

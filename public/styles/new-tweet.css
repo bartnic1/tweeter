@@ -1,4 +1,5 @@
 .new-tweet {
+  visibility: hidden;
   position: relative;
   margin: 1em 2em 0 2em;
   padding: 5px 10px 10px 10px;

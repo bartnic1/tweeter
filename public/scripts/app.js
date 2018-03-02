@@ -116,17 +116,38 @@ function loadTweets(){
   });
 }
 
+function showOptions() {
+  $(".compose").css("visibility", "visible");
+  $(".logout-span").css("visibility", "visible");
+  $(".new-tweet").css("visibility", "visible");
+  $(".users").css("visibility", "hidden");
+}
+
+function hideOptions() {
+  $(".compose").css("visibility", "hidden");
+  $(".logout-span").css("visibility", "hidden");
+  $(".new-tweet").css("visibility", "hidden");
+  $(".users").css("visibility", "visible");
+  $(".welcome").text('');
+}
+
 function addUser(userFormData){
   $.post("/users/", userFormData).done(function(res){
-    $(".users").slideToggle("fast");
+    showOptions();
   })
 }
 
+function clearEntries(name, pass){
+  name.val('');
+  pass.val('');
+  $('.notifications').text('');
+}
 
 //When the document loads, it first loads all the tweets in hte database.
 //When the a new tweet is created, assuming it passes relevant conditions, the serialized data
 //is sent to a server, after which it is immediately loaded on the screen using loadTweets().
 $(document).ready(function(){
+
   loadTweets();
   $("#tweetForm").on('submit', function(event){
     event.preventDefault();
@@ -158,7 +179,9 @@ $(document).ready(function(){
   //If database has no users, then add a user. Else, check if username taken. If not, add user.
   $("#registerForm").on('submit', function(event){
     event.preventDefault();
-    let name = $(".reg-name").find("input").val();
+
+    let name = $(".reg-name").find("input");
+    let pass = $(".reg-pass").find("input");
     let userFormData = $(this).serialize();
 
     $.get("/users/", (res) => {
@@ -166,14 +189,19 @@ $(document).ready(function(){
       //{_id: sldkjf, name: "adrian", pass: "asdf"}]
       if(res.length === 0){
         return addUser(userFormData);
-      }else if(name === ''){
+      }else if(name.val() === ''){
+        clearEntries(name, pass);
         return $(".notifications").text("Error: No name entered!");
       }else{
         for(let userFile of res){
-          if(userFile.name === name){
+          if(userFile.name === name.val()){
+            clearEntries(name, pass);
             return $(".notifications").text("Error: Name already taken!");
           }
         }
+        //Successful registration
+        $(".welcome").text(`Welcome, ${name.val()}!`)
+        clearEntries(name, pass);
         return addUser(userFormData);
       }
     })
@@ -182,27 +210,33 @@ $(document).ready(function(){
   $("#loginForm").on('submit', function(event){
     event.preventDefault();
     let userFormData = $(this).serialize();
-    let name = $(".login-name").find("input").val();
-    let pass = $(".login-pass").find("input").val();
+    let name = $(".login-name").find("input");
+    let pass = $(".login-pass").find("input");
     $.get("/users/", (res) => {
       console.log("User database:", res);
       for(let userFile of res){
-        if(userFile.name === name){
-          if(userFile.pass === pass){
-            return $.post("/users/login", userFormData)
+        if(userFile.name === name.val()){
+          if(userFile.pass === pass.val()){
+            //Successful login
+            $(".welcome").text(`Welcome, ${name.val()}!`)
+            clearEntries(name, pass);
+            return $.post("/users/login?_method=PUT", userFormData)
             .done((res) => {
-              $(".users").slideToggle("fast")});
+              showOptions();
+            });
           }
+          clearEntries(name, pass);
           return $(".notifications").text("Error: Password incorrect!");
         }
       }
+      clearEntries(name, pass);
       return $(".notifications").text("Error: Name not found!");
     });
   });
 
   $(".logout-button").on('click', function(event){
-    $.post("/users/logout").done(function(res){
-      $(".users").slideToggle("fast")
+    $.post("/users/logout?_method=PUT").done(function(res){
+      hideOptions();
     })
   });
 

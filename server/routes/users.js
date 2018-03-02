@@ -29,12 +29,12 @@ module.exports = function(db){
     });
   });
 
-  userRoutes.post("/login", (req, res) => {
+  userRoutes.put("/login", (req, res) => {
     req.session.name = req.body.name;
     res.status(201).send("Successfull login");
   });
 
-  userRoutes.post("/logout", (req, res) => {
+  userRoutes.put("/logout", (req, res) => {
     // db.collection("users").remove();
     // db.collection("tweets").remove();
     res.clearCookie("name");

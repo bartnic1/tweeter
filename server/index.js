@@ -9,10 +9,11 @@ const MONGODB_URI = "mongodb://localhost:27017/tweeter";
 const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
-const app           = express();
+const methodOverride = require('method-override');
 const sass          = require("node-sass");
 const sassMiddleware = require("node-sass-middleware");
 const path           = require("path");
+const app           = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -28,18 +29,9 @@ app.use(
     prefix: '/styles'
   }));
 
+app.use(methodOverride('_method'));
+
 app.use(express.static("public"));
-
-
-//flexboxfroggy.com
-//css-tricks.com
-
-
-// app.use(cookieSession({
-//   name: 'name',
-//   secret: 'abcdefg',
-//   maxAge: 24*60*60*1000
-// }));
 
 MongoClient.connect(MONGODB_URI, (err, db) => {
   if (err) {
