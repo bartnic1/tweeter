@@ -3,6 +3,11 @@
   flex-direction: column;
   margin: 1em 1em 0 1em;
 
+  h4 {
+    padding: 0;
+    margin: 0.3em;
+  }
+
   .register, .login {
     display: flex;
     flex-direction: row;

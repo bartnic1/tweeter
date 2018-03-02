@@ -117,9 +117,8 @@ function loadTweets(){
 }
 
 function addUser(userFormData){
-  $.post("/users", userFormData).done(function(res){
-    console.log(res);
-    $("#rollUserForms").slideToggle("fast");
+  $.post("/users/", userFormData).done(function(res){
+    $(".users").slideToggle("fast");
   })
 }
 
@@ -158,12 +157,13 @@ $(document).ready(function(){
 
   //If database has no users, then add a user. Else, check if username taken. If not, add user.
   $("#registerForm").on('submit', function(event){
-    let name = $("#registerForm").find(".name").find("input").val();
     event.preventDefault();
+    let name = $(".reg-name").find("input").val();
     let userFormData = $(this).serialize();
 
     $.get("/users/", (res) => {
-      console.log(res);
+      //res = [{_id: slkdjf, name: "john", pass: "wayne"},
+      //{_id: sldkjf, name: "adrian", pass: "asdf"}]
       if(res.length === 0){
         return addUser(userFormData);
       }else if(name === ''){
@@ -182,14 +182,16 @@ $(document).ready(function(){
   $("#loginForm").on('submit', function(event){
     event.preventDefault();
     let userFormData = $(this).serialize();
-    let name = $("#loginForm").find(".name").find("input").val();
-    let pass = $("#loginForm").find(".pass").find("input").val();
-    $.get("/users", function(res){
-      console.log(res);
+    let name = $(".login-name").find("input").val();
+    let pass = $(".login-pass").find("input").val();
+    $.get("/users/", (res) => {
+      console.log("User database:", res);
       for(let userFile of res){
         if(userFile.name === name){
           if(userFile.pass === pass){
-            return $.post("/login", userFormData).done(()=>{$("#rollUserForms").slideToggle("fast")});
+            return $.post("/users/login", userFormData)
+            .done((res) => {
+              $(".users").slideToggle("fast")});
           }
           return $(".notifications").text("Error: Password incorrect!");
         }
@@ -199,11 +201,9 @@ $(document).ready(function(){
   });
 
   $(".logout-button").on('click', function(event){
-    $.post("/logout").done(function(){
-      $("#rollUserForms").slideToggle("fast")
+    $.post("/users/logout").done(function(res){
+      $(".users").slideToggle("fast")
     })
   });
-
-
 
 });

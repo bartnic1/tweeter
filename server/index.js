@@ -59,7 +59,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   // The `tweets-routes` module works similarly: we pass it the `DataHelpers` object
   // so it can define routes that use it to interact with the data layer.
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
-  const userRoutes = require("./routes/users");
+  const userRoutes = require("./routes/users")(db);
   // Mount the tweets routes at the "/tweets" path prefix:
   app.use("/tweets", tweetsRoutes);
   app.use("/users", userRoutes);
