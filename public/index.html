@@ -26,6 +26,51 @@
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
+      <form method="POST", action="/users">
+        <span class="register">
+          <div><strong>Register:</strong></div>
+          <div class="email">
+            <label>E-mail:
+            <input type="email", name="email">
+            </label>
+          </div>
+          <div class="pass">
+            <label>Password:
+            <input type="pass", name="pass">
+            </label>
+          </div>
+        </span>
+        <span class="register-button">
+          <div>
+            <input type="submit" value="Register">
+          </div>
+        </span>
+      </form>
+      <form method="POST", action="/users">
+        <span class="login">
+          <div><strong>Login:</strong></div>
+          <div class="email">
+            <label>E-mail:
+            <input type="email", name="email">
+            </label>
+          </div>
+          <div class="pass">
+            <label>Password:
+            <input type="pass", name="pass">
+            </label>
+          </div>
+        </span>
+        <span class="login-button">
+          <div>
+            <input type="submit" value="Login">
+          </div>
+        </span>
+      </form>
+      <span class="logout-button">
+        <div>
+          <button value="Logout">Logout</button>
+        </div>
+      </span>
       <button class="compose"><i class="far fa-edit"></i> Compose</button>
     </nav>
     <!-- Page-specific (main) content here -->

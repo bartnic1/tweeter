@@ -36,6 +36,21 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   // Mount the tweets routes at the "/tweets" path prefix:
   app.use("/tweets", tweetsRoutes);
 
+  app.post("/users", (req, res) => {
+    let userObject = {name: req.body.name, pass: req.body.pass};
+    db.collection("users").insertOne(userObject)
+  })
+
+  app.get("/users", (req, res) => {
+    db.collection("users").find().toArray((err, userData) => {
+      if (err){
+        throw err
+      }else{
+        res.json(userData)
+      }
+    });
+  });
+
   app.listen(PORT, () => {
     console.log("Example app listening on port " + PORT);
   // DB will close automatically when the app shuts down

@@ -141,10 +141,15 @@ $(document).ready(function(){
     });
   });
 
-
-//This jQuery script allows the new tweet form to slide up and down upon clicking the compose button.
+  //This jQuery script allows the new tweet form to slide up and down upon clicking the compose button.
   $(".compose").on('click', function(event){
     $(".new-tweet").slideToggle("fast");
     $(".new-tweet").find("textarea").focus();
   });
+
+  $(".register").on('click', function(event){
+    event.preventDefault();
+  })
+
+
 });

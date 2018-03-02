@@ -10,16 +10,61 @@
 }
 
 #nav-bar .logo {
-  height: 80px;
-  width: 80px;
+  height: 5.5vw;
+  width: 5.5vw;
   float: left;
 }
 
 #nav-bar .header {
   float: left;
-  margin-left: 10px;
-  font-size: 32px;
-  line-height: 80px;
+  margin-left: 0.5vw;
+  font-size: 2.15vw;
+  line-height: 5vw;
+}
+
+#nav-bar .register {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  float: left;
+  margin-left: 1vw;
+}
+
+#nav-bar .register-button {
+  position: relative;
+  float: left;
+  margin: 2vw 1vw 1vw 1vw;
+}
+
+#nav-bar .login {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  float: left;
+}
+
+#nav-bar .login-button {
+  position: relative;
+  float : left;
+  margin: 2vw 0.5vw 0.5vw 0.5vw;
+}
+
+#nav-bar .logout-button {
+  position: relative;
+  float: left;
+  margin: 2vw 0.5vw 0.5vw 0.5vw;
+}
+
+#nav-bar .email {
+  padding: 0.1vw;
+}
+
+#nav-bar .email input {
+  margin-left: 1.55vw;
+}
+
+#nav-bar .pass {
+  padding: 0.1vw;
 }
 
 .compose {
