@@ -1,0 +1,27 @@
+.users {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 1em 0 1em;
+}
+
+.users .register, .users .login {
+  display: flex;
+  flex-direction: row;
+  margin: 0.5em 0.5em 0.5em 0.5em;
+  justify-content: flex-start;
+}
+
+.users .register .reg-name, .users .register .reg-pass, .users .register .login-name, .users .register .login-pass, .users .login .reg-name, .users .login .reg-pass, .users .login .login-name, .users .login .login-pass {
+  flex: 4 1 auto;
+}
+
+.users .register .reg-name input, .users .register .reg-pass input, .users .register .login-name input, .users .register .login-pass input, .users .login .reg-name input, .users .login .reg-pass input, .users .login .login-name input, .users .login .login-pass input {
+  width: 50%;
+  border: 0.2px solid #c6c6c6;
+}
+
+.users .register .reg-submit, .users .register .login-submit, .users .login .reg-submit, .users .login .login-submit {
+  flex: 1 1 auto;
+  width: 30%;
+  text-align: center;
+}

@@ -26,3 +26,17 @@ Tweeter is a simple, single-page Twitter clone. MongoDB is used for database man
 ## Useful Features
 
 ## Glitches
+
+
+
+//Pseudocode:
+
+When user registers, an ajax request determines whether the username has been taken.
+If not, then the username and password are added to the database.
+
+Now a cookie has to be generated, set with the user ID.
+Each time a new tweet is sent, an object is created with both the userID and the body.
+
+If there is no user cookie, then the userID is empty. So the object being sent will have an empty value
+for that key.
+

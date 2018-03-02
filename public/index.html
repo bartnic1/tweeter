@@ -7,13 +7,14 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" />
-    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <!-- font-awesome-4.7.0 -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <!-- App CSS -->
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
     <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
     <link rel="stylesheet" href="/styles/tweet.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/users.css" type="text/css" />
     <!-- External JS -->
     <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
     <!-- App JS -->
@@ -26,55 +27,74 @@
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
-      <form method="POST", action="/users">
-        <span class="register">
-          <div><strong>Register:</strong></div>
-          <div class="email">
-            <label>E-mail:
-            <input type="email", name="email">
-            </label>
-          </div>
-          <div class="pass">
-            <label>Password:
-            <input type="pass", name="pass">
-            </label>
-          </div>
-        </span>
-        <span class="register-button">
-          <div>
-            <input type="submit" value="Register">
-          </div>
-        </span>
-      </form>
-      <form method="POST", action="/users">
-        <span class="login">
-          <div><strong>Login:</strong></div>
-          <div class="email">
-            <label>E-mail:
-            <input type="email", name="email">
-            </label>
-          </div>
-          <div class="pass">
-            <label>Password:
-            <input type="pass", name="pass">
-            </label>
-          </div>
-        </span>
-        <span class="login-button">
-          <div>
-            <input type="submit" value="Login">
-          </div>
-        </span>
-      </form>
-      <span class="logout-button">
-        <div>
-          <button value="Logout">Logout</button>
-        </div>
-      </span>
       <button class="compose"><i class="far fa-edit"></i> Compose</button>
+      <button class="logout-button" value="Logout">Logout</button>
     </nav>
     <!-- Page-specific (main) content here -->
     <main class="container">
+      <header class="users">
+        <form id="registerForm" method="POST", action="/users">
+          <div class = "register">
+            <div class = "reg-name">
+              <label>Name: </label>
+              <input type="name", name="name">
+            </div>
+            <div class = "reg-pass">
+              <label>Password: </label>
+              <input type="pass", name="pass">
+            </div>
+            <div class = "reg-submit">
+              <input type="submit" value="Register">
+            </div>
+          </div>
+        </form>
+        <form id="loginForm" method="POST", action="/users">
+          <div class = "login">
+            <div class = "login-name">
+              <label>Name: </label>
+              <input type="name", name="name">
+            </div>
+            <div class = "login-pass">
+              <label>Password: </label>
+              <input type="pass", name="pass">
+            </div>
+            <div class = "login-submit">
+              <input type="submit" value="Login">
+            </div>
+          </div>
+        </form>
+      </header>
+<!--         <div class="register">
+          <form id="registerForm" method="POST", action="/users">
+            <div class="reg-name">
+              <label>Name: </label>
+              <input id="first" type="name", name="name">
+            </div>
+            <div class="reg-pass">
+              <label>Password: </label>
+              <input type="pass", name="pass">
+            </div>
+            <div class="reg-submit">
+              <input type="submit" value="Register">
+            </div>
+          </form>
+        </div>
+        <div class="login">
+          <form id="loginForm" method="POST", action="/users">
+            <div class="login-name">
+              <label>Name: </label>
+              <input type="name", name="name">
+            </div>
+            <div class="login-pass">
+              <label>Password: </label>
+              <input type="pass", name="pass">
+            </div>
+            <div class="login-submit">
+              <input type="submit" value="Login">
+            </div>
+          </form>
+        </div> -->
+
       <section class="new-tweet">
         <h2 class="title">Compose Tweet</h2>
           <form id="tweetForm" method="POST" action="/tweets/">

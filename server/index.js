@@ -4,15 +4,42 @@
 const {MongoClient} = require("mongodb");
 const MONGODB_URI = "mongodb://localhost:27017/tweeter";
 
-// Basic express setup:
+// Basic express setup + sass:
 
 const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
 const app           = express();
+const sass          = require("node-sass");
+const sassMiddleware = require("node-sass-middleware");
+const path           = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const srcPath = path.join(__dirname, 'scss-files');
+const destPath = path.join(__dirname, '..', 'public', 'styles');
+
+app.use(
+  sassMiddleware({
+    src: srcPath,
+    dest: destPath,
+    debug: true,
+    outputStyle: 'expanded',
+    prefix: '/styles'
+  }));
+
 app.use(express.static("public"));
+
+
+//flexboxfroggy.com
+//css-tricks.com
+
+
+// app.use(cookieSession({
+//   name: 'name',
+//   secret: 'abcdefg',
+//   maxAge: 24*60*60*1000
+// }));
 
 MongoClient.connect(MONGODB_URI, (err, db) => {
   if (err) {
@@ -32,24 +59,10 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   // The `tweets-routes` module works similarly: we pass it the `DataHelpers` object
   // so it can define routes that use it to interact with the data layer.
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
-
+  const userRoutes = require("./routes/users");
   // Mount the tweets routes at the "/tweets" path prefix:
   app.use("/tweets", tweetsRoutes);
-
-  app.post("/users", (req, res) => {
-    let userObject = {name: req.body.name, pass: req.body.pass};
-    db.collection("users").insertOne(userObject)
-  })
-
-  app.get("/users", (req, res) => {
-    db.collection("users").find().toArray((err, userData) => {
-      if (err){
-        throw err
-      }else{
-        res.json(userData)
-      }
-    });
-  });
+  app.use("/users", userRoutes);
 
   app.listen(PORT, () => {
     console.log("Example app listening on port " + PORT);

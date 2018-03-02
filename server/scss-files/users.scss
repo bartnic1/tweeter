@@ -1,0 +1,27 @@
+.users {
+  display: flex;
+  flex-direction: column;
+  margin: 1em 1em 0 1em;
+
+  .register, .login {
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    justify-content: flex-start;
+
+    .reg-name, .reg-pass, .login-name, .login-pass {
+      flex: 4 1 auto;
+
+      input {
+        width: 50%;
+        border: 0.2px solid #c6c6c6;
+      }
+    }
+
+    .reg-submit, .login-submit{
+      flex: 1 1 auto;
+      width: 30%;
+      text-align: center;
+    }
+  }
+}

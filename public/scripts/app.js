@@ -10,6 +10,8 @@ function findTimeDifference(today, tweet){
   let diffSeconds = Math.floor(today/1000) - Math.floor(tweet/1000);
   let returnString = '';
   //Function converts epoch seconds to years, months, days, hours, minutes, seconds.
+  //Note: This uses average seconds in a year, month etc. While the time elapsed is not perfectly precise,
+  //it is more than sufficient for this application.
   function getTimeElapsed(epochSeconds){
     // time = [[years,yearSeconds], [months,monthSeconds], [days, daySeconds], [hours, hourSeconds]]
     let time = [[0,31556926], [0,2629743], [0,86400], [0,3600]];
@@ -114,6 +116,13 @@ function loadTweets(){
   });
 }
 
+function addUser(userFormData){
+  $.post("/users", userFormData).done(function(res){
+    console.log(res);
+    $("#rollUserForms").slideToggle("fast");
+  })
+}
+
 
 //When the document loads, it first loads all the tweets in hte database.
 //When the a new tweet is created, assuming it passes relevant conditions, the serialized data
@@ -147,9 +156,54 @@ $(document).ready(function(){
     $(".new-tweet").find("textarea").focus();
   });
 
-  $(".register").on('click', function(event){
+  //If database has no users, then add a user. Else, check if username taken. If not, add user.
+  $("#registerForm").on('submit', function(event){
+    let name = $("#registerForm").find(".name").find("input").val();
     event.preventDefault();
+    let userFormData = $(this).serialize();
+
+    $.get("/users/", (res) => {
+      console.log(res);
+      if(res.length === 0){
+        return addUser(userFormData);
+      }else if(name === ''){
+        return $(".notifications").text("Error: No name entered!");
+      }else{
+        for(let userFile of res){
+          if(userFile.name === name){
+            return $(".notifications").text("Error: Name already taken!");
+          }
+        }
+        return addUser(userFormData);
+      }
+    })
   })
+
+  $("#loginForm").on('submit', function(event){
+    event.preventDefault();
+    let userFormData = $(this).serialize();
+    let name = $("#loginForm").find(".name").find("input").val();
+    let pass = $("#loginForm").find(".pass").find("input").val();
+    $.get("/users", function(res){
+      console.log(res);
+      for(let userFile of res){
+        if(userFile.name === name){
+          if(userFile.pass === pass){
+            return $.post("/login", userFormData).done(()=>{$("#rollUserForms").slideToggle("fast")});
+          }
+          return $(".notifications").text("Error: Password incorrect!");
+        }
+      }
+      return $(".notifications").text("Error: Name not found!");
+    });
+  });
+
+  $(".logout-button").on('click', function(event){
+    $.post("/logout").done(function(){
+      $("#rollUserForms").slideToggle("fast")
+    })
+  });
+
 
 
 });
