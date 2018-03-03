@@ -4,6 +4,13 @@ const userHelper    = require("../lib/util/user-helper")
 
 const express       = require('express');
 const tweetsRoutes  = express.Router();
+const cookieSession = require('cookie-session');
+
+tweetsRoutes.use(cookieSession({
+  name: 'name',
+  secret: 'abcdefg',
+  maxAge: 24*60*60*1000
+}));
 
 module.exports = function(DataHelpers) {
 
@@ -18,18 +25,34 @@ module.exports = function(DataHelpers) {
   });
 
   tweetsRoutes.post("/", function(req, res) {
+
     if (!req.body.text) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
-    const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
+    console.log("Session name", req.session.name);
+    let cookiename = req.session.name;
+    let newUserObj;
+    if(cookiename){
+      newUserObj = {
+      name: cookiename,
+      avatars: {
+        small:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
+        regular: "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
+        large:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
+      },
+      handle: `@${cookiename}` }
+    }
+
+    const user = cookiename ? newUserObj : userHelper.generateRandomUser();
     const tweet = {
       user: user,
       content: {
         text: req.body.text
       },
       created_at: Date.now(),
-      likes: 0
+      likes: 0,
+      likedBy: {}
     };
 
     DataHelpers.saveTweet(tweet, (err) => {
@@ -43,7 +66,6 @@ module.exports = function(DataHelpers) {
 
   tweetsRoutes.put("/", function(req, res) {
     DataHelpers.updateTweet(req);
-    // console.log(DataHelpers.updateTweet(req));
   });
 
   return tweetsRoutes;

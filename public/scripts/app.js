@@ -147,12 +147,12 @@ function clearEntries(name, pass){
 
 let allowLikes = false;
 
-//When the document loads, it first loads all the tweets in hte database.
+//When the document loads, it first loads all the tweets into the database.
+$(document).ready(function(){
+  loadTweets();
+
 //When the a new tweet is created, assuming it passes relevant conditions, the serialized data
 //is sent to a server, after which it is immediately loaded on the screen using loadTweets().
-$(document).ready(function(){
-
-  loadTweets();
   $("#tweetForm").on('submit', function(event){
     event.preventDefault();
     let errorMessage = $(".new-tweet").find(".error-message")
@@ -164,6 +164,7 @@ $(document).ready(function(){
       return errorMessage.text("Error: Message too long");
     }
     let formData = $(this).serialize();
+
     //Reset form upon submission
     errorMessage.text('');
     tweetTextArea.val('');
