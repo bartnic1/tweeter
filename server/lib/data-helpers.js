@@ -28,11 +28,13 @@ module.exports = function makeDataHelpers(db) {
     },
 
     updateTweet: function(req) {
-      if(req.body.handle === `@${req.session.name}`){
-        return false;
+      let sessionName = req.session.name;
+      let decrement = req.body.likes - 1;
+      if(req.body.handle === `@${sessionName}`){
+        return "reset";
       }else{
-        db.collection("tweets").updateOne({'user.handle': req.body.handle},
-        {$set: {likes: req.body.likes}}, (err, res) => {if(err){throw err}});
+          db.collection("tweets").updateOne({'user.handle': req.body.handle},
+          {$set: {likes: req.body.likes}}, (err, res) => {if(err){throw err}});
       }
     }
   };

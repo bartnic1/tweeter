@@ -10,6 +10,7 @@ userRoutes.use(cookieSession({
 
 module.exports = function(db){
 
+//This post method creates a new user, stores it in the database, and generates a cookie session in the browser
   userRoutes.post("/", (req, res) => {
     let userObject = {name: req.body.name, pass: req.body.pass};
     req.session.name = req.body.name;
@@ -17,6 +18,7 @@ module.exports = function(db){
     res.status(201).send("Successfull registration");
   });
 
+//This get method retrieves the list of users from the database
   userRoutes.get("/", (req, res) => {
     db.collection("users").find().toArray((err, userData) => {
       if (err){
@@ -26,13 +28,14 @@ module.exports = function(db){
       }
     });
   });
-
+//This put method logs the users in, and generates a cookie session with the correct name
   userRoutes.put("/login", (req, res) => {
     req.session.name = req.body.name;
     res.status(201).send("Successfull login");
   });
 
-  userRoutes.put("/logout", (req, res) => {
+//This put method logs the user out, and clear the existing cookie
+  userRoutes.delete("/logout", (req, res) => {
     res.clearCookie("name");
     res.status(201).send("Successfull logout");
   });

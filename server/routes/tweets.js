@@ -14,6 +14,7 @@ tweetsRoutes.use(cookieSession({
 
 module.exports = function(DataHelpers) {
 
+  //Retrieves tweets from a database
   tweetsRoutes.get("/", function(req, res) {
     DataHelpers.getTweets((err, tweets) => {
       if (err) {
@@ -24,27 +25,26 @@ module.exports = function(DataHelpers) {
     });
   });
 
+  //Generates new tweets
   tweetsRoutes.post("/", function(req, res) {
 
     if (!req.body.text) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
+
     let cookiename = req.session.name;
     let newUserObj;
+    //Only create a tweet if a cookie exists (i.e. a user is logged in)
     if(cookiename){
       let randomUser = userHelper.generateRandomUser();
       let avatars = randomUser.avatars;
-      console.log(randomUser);
-      newUserObj = {
-      name: cookiename,
-      avatars: avatars,
-        // small:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        // regular: "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        // large:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      handle: `@${cookiename}` }
-    }
 
+      newUserObj = {
+        name: cookiename,
+        avatars: avatars,
+        handle: `@${cookiename}` }
+    }
     const user = cookiename ? newUserObj : userHelper.generateRandomUser();
     const tweet = {
       user: user,
@@ -67,11 +67,11 @@ module.exports = function(DataHelpers) {
 
   //Handles "likes" of certain tweets.
   tweetsRoutes.put("/", function(req, res) {
-    if(DataHelpers.updateTweet(req) === false){
-      res.send(false);
-    }else{
-      res.send(true);
+    let returnVal = DataHelpers.updateTweet(req);
+    if(returnVal === "reset"){
+      return res.send("reset");
     }
+    res.send("Done");
   });
 
   return tweetsRoutes;

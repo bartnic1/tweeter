@@ -14,7 +14,7 @@
     },
     "created_at": 1461116232227,
     "likes": 0,
-    "liked_by": {}
+    "likedBy": {}
   },
   {
     "user": {
@@ -30,7 +30,7 @@
     },
     "created_at": 1461113959088,
     "likes": 0,
-    "liked_by": {}
+    "likedBy": {}
   },
   {
     "user": {
@@ -47,6 +47,6 @@
     },
     "created_at": 1461113796368,
     "likes": 0,
-    "liked_by": {}
+    "likedBy": {}
   }
 ]

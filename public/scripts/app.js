@@ -246,7 +246,7 @@ $(document).ready(function(){
   //Logs the user out, and deletes the current session cookie. Also prevents the now anonymous
   //user from liking or adding any new tweets
   $(".logout-button").on('click', function(event){
-    $.post("/users/logout?_method=PUT").done(function(res){
+    $.post("/users/logout?_method=DELETE").done(function(res){
       hideOptions();
       allowLikes = false;
     })
@@ -270,7 +270,7 @@ $(document).ready(function(){
         //Now update database for persistency
         userObj = {handle: userHandle, likes: likesCounter.text()}
         $.post("/tweets/?_method=PUT", userObj).done(function(res){
-          if(res === false){
+          if(res === "reset"){
             likesCounter.text(+likesCounter.text() - 1);
           }
         });
