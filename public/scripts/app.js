@@ -221,7 +221,6 @@ $(document).ready(function(){
     let name = $(".login-name").find("input");
     let pass = $(".login-pass").find("input");
     $.get("/users/", (res) => {
-      // console.log("User database:", res);
       for(let userFile of res){
         if(userFile.name === name.val()){
           if(userFile.pass === pass.val()){
@@ -264,8 +263,6 @@ $(document).ready(function(){
 
         //Get user handle to test if liking user's own tweet, or other tweet more than once
         let userHandle = $(target).data('handle');
-        console.log('handle', userHandle);
-        console.log('currentlikes', likesCounter.text());
 
         //Now update database for persistency
         userObj = {handle: userHandle, likes: likesCounter.text()}

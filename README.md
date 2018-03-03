@@ -22,6 +22,7 @@ Tweeter is a simple, single-page Twitter clone. MongoDB is used for database man
 - Method-override
 - Node sass
 - Node sass middleware
+- Path
 
 ## Getting Started
 
