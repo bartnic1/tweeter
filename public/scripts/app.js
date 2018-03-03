@@ -8,7 +8,7 @@
 //Only goes down to the hour, but can be easily modified to go to minutes and seconds.
 function findTimeDifference(today, tweet){
   let diffSeconds = Math.floor(today/1000) - Math.floor(tweet/1000);
-  let returnString = '';
+  let returnArray = [];
   //Function converts epoch seconds to years, months, days, hours, minutes, seconds.
   //Note: This uses average seconds in a year, month etc. While the time elapsed is not perfectly precise,
   //it is more than sufficient for this application.
@@ -28,49 +28,49 @@ function findTimeDifference(today, tweet){
         if (diffConverted[timeIndex] === 0){
           break;
         }else if(diffConverted[timeIndex] === 1){
-          returnString += `${diffConverted[timeIndex]} year, `;
+          returnArray.push(`${diffConverted[timeIndex]} year`);
         }else{
-          returnString += `${diffConverted[timeIndex]} years, `;
+          returnArray.push(`${diffConverted[timeIndex]} years`);
         }
         break;
       case '1':
         if (diffConverted[timeIndex] === 0){
           break;
         }else if(diffConverted[timeIndex] === 1){
-          returnString += `${diffConverted[timeIndex]} month, `;
+          returnArray.push(`${diffConverted[timeIndex]} month`);
         }else{
-          returnString += `${diffConverted[timeIndex]} months, `;
+          returnArray.push(`${diffConverted[timeIndex]} months`);
         }
         break;
       case '2':
         if (diffConverted[timeIndex] === 0){
           break;
         }else if(diffConverted[timeIndex] === 1){
-          returnString += `${diffConverted[timeIndex]} day, `;
+          returnArray.push(`${diffConverted[timeIndex]} day`);
         }else{
-          returnString += `${diffConverted[timeIndex]} days, `;
+          returnArray.push(`${diffConverted[timeIndex]} days`);
         }
         break;
       case '3':
         if (diffConverted[timeIndex] === 0){
           break;
         }else if(diffConverted[timeIndex] === 1){
-          returnString += `${diffConverted[timeIndex]} hour ago`;
+          returnArray.push(`${diffConverted[timeIndex]} hour`);
         }else{
-          returnString += `${diffConverted[timeIndex]} hours ago`;
+          returnArray.push(`${diffConverted[timeIndex]} hours`);
         }
         break;
       default:
         break;
     }
   }
-  if(returnString === ''){
-    returnString = `Under an hour ago`;
+  if(returnArray.length === 0){
+    return `Under an hour ago`;
   }
+  let returnString = returnArray.join(", ") + ' ago';
   return returnString;
 }
-
-//This generates the html for a new tweet
+//This generates the html for a n)ew tweet
 function createTweetElement(tweetData){
   $( "#greatphoto" ).attr( "alt", "Beijing Brush Seller" );
   let $tweet = $("<div>").addClass("tweet");
@@ -185,8 +185,7 @@ $(document).ready(function(){
     let userFormData = $(this).serialize();
 
     $.get("/users/", (res) => {
-      //res = [{_id: slkdjf, name: "john", pass: "wayne"},
-      //{_id: sldkjf, name: "adrian", pass: "asdf"}]
+      //res = [{_id: slkdjf, name: "john", pass: "wayne"}...]
       if(res.length === 0){
         return addUser(userFormData);
       }else if(name.val() === ''){
@@ -207,13 +206,15 @@ $(document).ready(function(){
     })
   })
 
+  //Check if username and password is correct. If so, clear entries for later use and make put request
+  //to create user cookie.
   $("#loginForm").on('submit', function(event){
     event.preventDefault();
     let userFormData = $(this).serialize();
     let name = $(".login-name").find("input");
     let pass = $(".login-pass").find("input");
     $.get("/users/", (res) => {
-      console.log("User database:", res);
+      // console.log("User database:", res);
       for(let userFile of res){
         if(userFile.name === name.val()){
           if(userFile.pass === pass.val()){
@@ -240,4 +241,6 @@ $(document).ready(function(){
     })
   });
 
+
+  $(".")
 });
