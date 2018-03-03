@@ -23,8 +23,6 @@ module.exports = function(db){
         throw err
       }else{
         res.status(201).send(userData);
-        // res.json(userData);
-        // res.status(201).send("hello");
       }
     });
   });
@@ -35,8 +33,6 @@ module.exports = function(db){
   });
 
   userRoutes.put("/logout", (req, res) => {
-    // db.collection("users").remove();
-    // db.collection("tweets").remove();
     res.clearCookie("name");
     res.status(201).send("Successfull logout");
   });

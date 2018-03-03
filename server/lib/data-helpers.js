@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 // Simulates the kind of delay we see with network or filesystem operations
 const simulateDelay = require("./util/simulate-delay");
 
@@ -26,9 +28,12 @@ module.exports = function makeDataHelpers(db) {
     },
 
     updateTweet: function(req) {
-      db.collection("tweets").updateOne({'user.handle': req.body.handle},
+      if(req.body.handle === `@${req.session.name}`){
+        return false;
+      }else{
+        db.collection("tweets").updateOne({'user.handle': req.body.handle},
         {$set: {likes: req.body.likes}}, (err, res) => {if(err){throw err}});
+      }
     }
-
   };
 }

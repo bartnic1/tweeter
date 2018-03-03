@@ -64,8 +64,13 @@ module.exports = function(DataHelpers) {
     });
   });
 
+  //Handles "likes" of certain tweets.
   tweetsRoutes.put("/", function(req, res) {
-    DataHelpers.updateTweet(req);
+    if(DataHelpers.updateTweet(req) === false){
+      res.send(false);
+    }else{
+      res.send(true);
+    }
   });
 
   return tweetsRoutes;

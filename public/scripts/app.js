@@ -254,15 +254,20 @@ $(document).ready(function(){
     if(allowLikes){
       let target = event.target;
       if(target.classList[1] === "like"){
+        //Immediately increment number of likes
         let likesCounter = $(target).siblings(".likes");
-        let currentLikes = +likesCounter.text();
-        likesCounter.text(currentLikes + 1);
+        likesCounter.text(+likesCounter.text() + 1);
+        //Get user handle to test if liking user's own tweet, or other tweet more than once
         let userHandle = $(target).data('handle');
         console.log('handle', userHandle);
         console.log('currentlikes', likesCounter.text());
         //Now update database for persistency
         userObj = {handle: userHandle, likes: likesCounter.text()}
-        $.post("/tweets/?_method=PUT", userObj);
+        $.post("/tweets/?_method=PUT", userObj).done(function(res){
+          if(res === false){
+            likesCounter.text(+likesCounter.text() - 1);
+          }
+        });
     }
 
     }
