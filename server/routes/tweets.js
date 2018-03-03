@@ -30,17 +30,18 @@ module.exports = function(DataHelpers) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
-    console.log("Session name", req.session.name);
     let cookiename = req.session.name;
     let newUserObj;
     if(cookiename){
+      let randomUser = userHelper.generateRandomUser();
+      let avatars = randomUser.avatars;
+      console.log(randomUser);
       newUserObj = {
       name: cookiename,
-      avatars: {
-        small:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        regular: "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        large:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
+      avatars: avatars,
+        // small:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
+        // regular: "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
+        // large:   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
       handle: `@${cookiename}` }
     }
 
