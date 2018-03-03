@@ -155,7 +155,6 @@ let allowLikes = false;
 //When the document loads, it first loads all the tweets into the database.
 $(document).ready(function(){
   loadTweets();
-  // $(".new-tweet").css("display", "inline");
 //This event handler is used to generate tweets. For logged-in users, the cookie session ID is used to generate a userID and handle. Creation of a unique avatar is a work in progress.
   $("#tweetForm").on('submit', function(event){
     event.preventDefault();
