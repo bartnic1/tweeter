@@ -119,17 +119,19 @@ function loadTweets(){
 
 //These functions ensure that only logged-in users have access to certain UI options, such as composing
 //new messages.
+//Logged-in:
 function showOptions() {
   $(".compose").css("visibility", "visible");
   $(".logout-span").css("visibility", "visible");
-  $(".new-tweet").css("visibility", "visible");
   $(".users").css("visibility", "hidden");
+  $(".new-tweet").css("visibility", "visible");
 }
-
+//Logged-out:
 function hideOptions() {
   $(".compose").css("visibility", "hidden");
   $(".logout-span").css("visibility", "hidden");
   $(".new-tweet").css("visibility", "hidden");
+  $(".new-tweet").slideDown("fast");
   $(".users").css("visibility", "visible");
   $(".welcome").text('');
 }
@@ -153,7 +155,7 @@ let allowLikes = false;
 //When the document loads, it first loads all the tweets into the database.
 $(document).ready(function(){
   loadTweets();
-
+  // $(".new-tweet").css("display", "inline");
 //This event handler is used to generate tweets. For logged-in users, the cookie session ID is used to generate a userID and handle. Creation of a unique avatar is a work in progress.
   $("#tweetForm").on('submit', function(event){
     event.preventDefault();

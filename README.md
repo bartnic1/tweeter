@@ -51,3 +51,8 @@ Tweeter is a simple, single-page Twitter clone. MongoDB is used for database man
 - Implement feature where user can only like other posts once, otherwise clicking 'like' again decrements the likes
 - Implement support for hosting on an external server
 - Allow user to upload their own avatar and maintain persistence throughout multiple sessions
+
+
+## Miscellaneous
+
+- Users won't be able to log in with the same name. On my server, for example, user "john" with password "wayne" can't be re-used for registration.
