@@ -5,10 +5,10 @@ Tweeter is a simple, single-page Twitter clone. MongoDB is used for database man
 ## Final Product
 
 ### A Sample tinyURL Table
-!["Logged in"](https://github.com/bartnic1/TinyApp/blob/master/URL%20Main%20Table.png)
+!["Logged in"](https://github.com/bartnic1/tweeter/blob/master/loggedin.png)
 
 ### tinyURL Editing in Action
-!["Logged out"](https://github.com/bartnic1/TinyApp/blob/master/URL%20Edit%20Page.png)
+!["Logged out"](https://github.com/bartnic1/tweeter/blob/master/loggedout.png)
 
 ## Dependencies
 
