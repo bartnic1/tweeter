@@ -23,6 +23,11 @@ module.exports = function makeDataHelpers(db) {
           callback(null, tweets.sort(sortNewestFirst));
         }
       });
+    },
+
+    updateTweet: function(req) {
+      db.collection("tweets").updateOne({'user.handle': req.body.handle},
+        {$set: {likes: req.body.likes}}, (err, res) => {if(err){throw err}});
     }
 
   };

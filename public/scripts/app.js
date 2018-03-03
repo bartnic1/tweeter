@@ -87,7 +87,9 @@ function createTweetElement(tweetData){
   // Footer elements
   let $footer = $("<footer>")
   $(`<span>${timeDifference}</span>`).addClass("created-at").appendTo($footer);
-  $("<img>").addClass("icons like").attr("src", "/images/tweetLike.png").appendTo($footer);
+  $(`<span>${tweetData.likes}</span>`).addClass("likes").appendTo($footer);
+  $('<span> likes</span>').addClass("likesText").appendTo($footer);
+  $("<img>").addClass("icons like").attr("src", "/images/tweetLike.png").data('handle',`${tweetData.user.handle}`).appendTo($footer);
   $("<img>").addClass("icons retweet").attr("src", "/images/tweetRetweet.png").appendTo($footer);
   $("<img>").addClass("icons flag").attr("src", "/images/tweetFlag.png").appendTo($footer);
   $tweet.append($header);
@@ -142,6 +144,8 @@ function clearEntries(name, pass){
   pass.val('');
   $('.notifications').text('');
 }
+
+let allowLikes = false;
 
 //When the document loads, it first loads all the tweets in hte database.
 //When the a new tweet is created, assuming it passes relevant conditions, the serialized data
@@ -201,6 +205,7 @@ $(document).ready(function(){
         //Successful registration
         $(".welcome").text(`Welcome, ${name.val()}!`)
         clearEntries(name, pass);
+        allowLikes = true;
         return addUser(userFormData);
       }
     })
@@ -224,6 +229,7 @@ $(document).ready(function(){
             return $.post("/users/login?_method=PUT", userFormData)
             .done((res) => {
               showOptions();
+              allowLikes = true;
             });
           }
           clearEntries(name, pass);
@@ -238,9 +244,26 @@ $(document).ready(function(){
   $(".logout-button").on('click', function(event){
     $.post("/users/logout?_method=PUT").done(function(res){
       hideOptions();
+      allowLikes = false;
     })
   });
 
 
-  $(".")
+  $("#tweets-container").on('click', function(event){
+    if(allowLikes){
+      let target = event.target;
+      if(target.classList[1] === "like"){
+        let likesCounter = $(target).siblings(".likes");
+        let currentLikes = +likesCounter.text();
+        likesCounter.text(currentLikes + 1);
+        let userHandle = $(target).data('handle');
+        console.log('handle', userHandle);
+        console.log('currentlikes', likesCounter.text());
+        //Now update database for persistency
+        userObj = {handle: userHandle, likes: likesCounter.text()}
+        $.post("/tweets/?_method=PUT", userObj);
+    }
+
+    }
+  });
 });

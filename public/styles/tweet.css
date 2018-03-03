@@ -103,3 +103,19 @@
   width: 10%;
   opacity: 0;
 }
+
+.tweet .likes {
+  position: absolute;
+  float: right;
+  right: 35px;
+  top: -25px;
+  color: #000000;
+}
+
+.tweet .likesText {
+  position: absolute;
+  float: right;
+  right: 5px;
+  top: -25px;
+  color: #000000;
+}
